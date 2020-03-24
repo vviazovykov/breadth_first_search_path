@@ -2,11 +2,9 @@ package com.somecompany.bfs_path;
 
 import com.somecompany.bfs_path.model.Coordinate;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class Maze {
     private static final int ROAD = 0;
@@ -20,14 +18,8 @@ public class Maze {
     private Coordinate start;
     private Coordinate end;
 
-    public Maze(File maze) throws FileNotFoundException {
-        String fileText = "";
-        try (Scanner input = new Scanner(maze)) {
-            while (input.hasNextLine()) {
-                fileText += input.nextLine() + "\n";
-            }
-        }
-        initializeMaze(fileText);
+    public Maze(String maze) throws FileNotFoundException {
+        initializeMaze(maze);
     }
 
     private void initializeMaze(String text) {
@@ -102,7 +94,7 @@ public class Maze {
         return true;
     }
 
-    public void printPath(List<Coordinate> path) {
+    public String printPath(List<Coordinate> path) {
         int[][] tempMaze = Arrays.stream(maze)
                 .map(int[]::clone)
                 .toArray(int[][]::new);
@@ -112,7 +104,9 @@ public class Maze {
             }
             tempMaze[coordinate.getX()][coordinate.getY()] = PATH;
         }
-        System.out.println(toString(tempMaze));
+        String shortestPath = toString(tempMaze);
+        System.out.println(shortestPath);
+        return shortestPath;
     }
 
     public String toString(int[][] maze) {
